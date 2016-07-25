@@ -1,7 +1,7 @@
 var Base = require('basejs')
 var ActionCable = require('../action_cable.js')
 
-var Consumer = ActionCable.extend({
+var Consumer = Base.extend({
   constructor: function (url) {
     this.url = url
     this.subscriptions = new Subscriptions(this);
