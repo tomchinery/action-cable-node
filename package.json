@@ -1,0 +1,28 @@
+{
+  "name": "action-cable-node",
+  "version": "1.0.0",
+  "description": "Action Cable extracted from Rails 5 and packaged as a Node module",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tomchinery/action-cable-node.git"
+  },
+  "keywords": [
+    "action",
+    "cable",
+    "node",
+    "websockets"
+  ],
+  "author": "Tom Chinery <hello@tomchinery.com> (http://github.com/tomchinery)",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/tomchinery/action-cable-node/issues"
+  },
+  "homepage": "https://github.com/tomchinery/action-cable-node#readme",
+  "dependencies": {
+    "basejs": "^1.1.1"
+  }
+}
