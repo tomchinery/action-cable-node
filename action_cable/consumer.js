@@ -1,6 +1,7 @@
 var Base = require('basejs')
 var ActionCable = require('../action_cable.js')
 var Subscriptions = require('./subscriptions.js')
+var Connection = require('./connection.js')
 
 var Consumer = Base.extend({
   constructor: function (url) {

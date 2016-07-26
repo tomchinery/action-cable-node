@@ -1,5 +1,10 @@
 var Base = require('basejs')
 var ActionCable = require('../action_cable.js')
+var INTERNAL_JSON = require('../internal.js')
+var ConnectionMonitor = require('./connection_monitor.js')
+
+var message_types = INTERNAL_JSON.message_types
+var supportedProtocols = INTERNAL_JSON.protocols
 
 var bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
   indexOf = [].indexOf || function(item) { for (var i = 0, l = this.length; i < l; i++) { if (i in this && this[i] === item) return i; } return -1; },

@@ -1,5 +1,6 @@
 var Base = require('basejs')
 var ActionCable = require('../action_cable.js')
+var Subscription = require('./subscription.js')
 
 var slice = [].slice;
 
