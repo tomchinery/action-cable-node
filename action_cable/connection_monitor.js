@@ -91,8 +91,11 @@ var ConnectionMonitor = Base.extend({
   },
 
   getPollInterval: function () {
-    var interval, max, min, ref;
-    ref = this.constructor.pollInterval, min = ref.min, max = ref.max;
+    // var interval, max, min, ref;
+    // ref = this.constructor.pollInterval, min = ref.min, max = ref.max;
+    var interval, max, min;
+    max = this.pollInterval.max
+    min = this.pollInterval.min
     interval = 5 * Math.log(this.reconnectAttempts + 1);
     return Math.round(clamp(interval, min, max) * 1000);
   },
