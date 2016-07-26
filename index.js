@@ -5,8 +5,8 @@ var Base = require('basejs')
 var INTERNAL = require('./internal.js')
 
 // Import ActionCable
-var ActionCable = require('./action_cable.js')
-
-var ActionCable= new ActionCable().self
-
+var ActionCableClass = require('./action_cable.js')
+// //
+var ActionCable = new ActionCableClass().self
+// //
 module.exports = ActionCable

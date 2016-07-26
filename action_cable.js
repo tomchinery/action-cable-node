@@ -2,7 +2,9 @@ var Base = require('basejs')
 var INTERNAL_JSON = require('./internal.js')
 var Consumer = require('./action_cable/consumer.js')
 
-var ActionCable = Base.extend({
+var slice = [].slice;
+
+var ActionCableClass = Base.extend({
 
   constructor: function () {
     this.self = this
@@ -44,9 +46,8 @@ var ActionCable = Base.extend({
     return this.debugging = null;
   },
 
-  log: function() {
-    var messages;
-    messages = 1 <= arguments.length ? slice.call(arguments, 0) : [];
+  log: function(messages) {
+    var messages = 1 <= arguments.length ? slice.call(arguments, 0) : [];
     if (this.debugging) {
       messages.push(Date.now());
       return console.log.apply(console, ["[ActionCable]"].concat(slice.call(messages)));
@@ -54,4 +55,4 @@ var ActionCable = Base.extend({
   }
 });
 
-module.exports = ActionCable
+module.exports = ActionCableClass

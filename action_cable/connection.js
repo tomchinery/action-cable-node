@@ -1,10 +1,11 @@
 var Base = require('basejs')
-var ActionCable = require('../action_cable.js')
 var INTERNAL_JSON = require('../internal.js')
 var ConnectionMonitor = require('./connection_monitor.js')
+var log = require('../log.js')
 
 var message_types = INTERNAL_JSON.message_types
 var supportedProtocols = INTERNAL_JSON.protocols
+var protocols = INTERNAL_JSON.protocols
 
 var bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
   indexOf = [].indexOf || function(item) { for (var i = 0, l = this.length; i < l; i++) { if (i in this && this[i] === item) return i; } return -1; },
@@ -33,10 +34,10 @@ var Connection = Base.extend({
 
   open: function () {
     if (this.isActive()) {
-      ActionCable.log("Attempted to open WebSocket, but existing socket is " + (this.getState()));
+      log("Attempted to open WebSocket, but existing socket is " + (this.getState()));
       throw new Error("Existing connection must be closed before opening");
     } else {
-      ActionCable.log("Opening WebSocket, current state is " + (this.getState()) + ", subprotocols: " + protocols);
+      log("Opening WebSocket, current state is " + (this.getState()) + ", subprotocols: " + protocols);
       if (this.webSocket != null) {
         this.uninstallEventHandlers();
       }
@@ -62,15 +63,15 @@ var Connection = Base.extend({
 
   reopen: function () {
     var error;
-    ActionCable.log("Reopening WebSocket, current state is " + (this.getState()));
+    log("Reopening WebSocket, current state is " + (this.getState()));
     if (this.isActive()) {
       try {
         return this.close();
       } catch (_error) {
         error = _error;
-        return ActionCable.log("Failed to reopen WebSocket", error);
+        return log("Failed to reopen WebSocket", error);
       } finally {
-        ActionCable.log("Reopening WebSocket in " + this.constructor.reopenDelay + "ms");
+        log("Reopening WebSocket in " + this.constructor.reopenDelay + "ms");
         setTimeout(this.open, this.constructor.reopenDelay);
       }
     } else {
@@ -151,17 +152,17 @@ var Connection = Base.extend({
         }
       },
       open: function() {
-        ActionCable.log("WebSocket onopen event, using '" + (this.getProtocol()) + "' subprotocol");
+        log("WebSocket onopen event, using '" + (this.getProtocol()) + "' subprotocol");
         this.disconnected = false;
         if (!this.isProtocolSupported()) {
-          ActionCable.log("Protocol is unsupported. Stopping monitor and disconnecting.");
+          log("Protocol is unsupported. Stopping monitor and disconnecting.");
           return this.close({
             allowReconnect: false
           });
         }
       },
       close: function(event) {
-        ActionCable.log("WebSocket onclose event");
+        log("WebSocket onclose event");
         if (this.disconnected) {
           return;
         }
@@ -172,7 +173,7 @@ var Connection = Base.extend({
         });
       },
       error: function() {
-        return ActionCable.log("WebSocket onerror event");
+        return log("WebSocket onerror event");
       }
     }
   }

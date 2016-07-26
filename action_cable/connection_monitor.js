@@ -1,6 +1,6 @@
 var Base = require('basejs')
-var ActionCable = require('../action_cable.js')
 var INTERNAL_JSON = require('../internal.js')
+var log = require('../log.js')
 
 var bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
 
@@ -39,7 +39,7 @@ var ConnectionMonitor = Base.extend({
       delete this.stoppedAt;
       this.startPolling();
       document.addEventListener("visibilitychange", this.visibilityDidChange);
-      return ActionCable.log("ConnectionMonitor started. pollInterval = " + (this.getPollInterval()) + " ms");
+      return log("ConnectionMonitor started. pollInterval = " + (this.getPollInterval()) + " ms");
     }
   },
 
@@ -48,7 +48,7 @@ var ConnectionMonitor = Base.extend({
       this.stoppedAt = now();
       this.stopPolling();
       document.removeEventListener("visibilitychange", this.visibilityDidChange);
-      return ActionCable.log("ConnectionMonitor stopped");
+      return log("ConnectionMonitor stopped");
     }
   },
 
@@ -64,12 +64,12 @@ var ConnectionMonitor = Base.extend({
     this.reconnectAttempts = 0;
     this.recordPing();
     delete this.disconnectedAt;
-    return ActionCable.log("ConnectionMonitor recorded connect");
+    return log("ConnectionMonitor recorded connect");
   },
 
   recordDisconnect: function () {
     this.disconnectedAt = now();
-    return ActionCable.log("ConnectionMonitor recorded disconnect");
+    return log("ConnectionMonitor recorded disconnect");
   },
 
   startPolling: function () {
@@ -99,12 +99,12 @@ var ConnectionMonitor = Base.extend({
 
   reconnectIfStale: function () {
     if (this.connectionIsStale()) {
-      ActionCable.log("ConnectionMonitor detected stale connection. reconnectAttempts = " + this.reconnectAttempts + ", pollInterval = " + (this.getPollInterval()) + " ms, time disconnected = " + (secondsSince(this.disconnectedAt)) + " s, stale threshold = " + this.constructor.staleThreshold + " s");
+      log("ConnectionMonitor detected stale connection. reconnectAttempts = " + this.reconnectAttempts + ", pollInterval = " + (this.getPollInterval()) + " ms, time disconnected = " + (secondsSince(this.disconnectedAt)) + " s, stale threshold = " + this.constructor.staleThreshold + " s");
       this.reconnectAttempts++;
       if (this.disconnectedRecently()) {
-        return ActionCable.log("ConnectionMonitor skipping reopening recent disconnect");
+        return log("ConnectionMonitor skipping reopening recent disconnect");
       } else {
-        ActionCable.log("ConnectionMonitor reopening");
+        log("ConnectionMonitor reopening");
         return this.connection.reopen();
       }
     }
@@ -124,7 +124,7 @@ var ConnectionMonitor = Base.extend({
       return setTimeout((function(_this) {
         return function() {
           if (_this.connectionIsStale() || !_this.connection.isOpen()) {
-            ActionCable.log("ConnectionMonitor reopening stale connection on visibilitychange. visbilityState = " + document.visibilityState);
+            log("ConnectionMonitor reopening stale connection on visibilitychange. visbilityState = " + document.visibilityState);
             return _this.connection.reopen();
           }
         };
