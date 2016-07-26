@@ -9,7 +9,7 @@ npm install action-cable-node --save
 
 ## Usage
 
-It has all the same methods as ActionCable and is usage is exactly the same.
+It has all the same methods as ActionCable and usage is exactly the same.
 
 ```
 import ActionCable from 'action-cable-node'

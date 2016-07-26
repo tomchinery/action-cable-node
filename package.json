@@ -17,7 +17,7 @@
     "websockets"
   ],
   "author": "Tom Chinery <hello@tomchinery.com> (http://github.com/tomchinery)",
-  "license": "ISC",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/tomchinery/action-cable-node/issues"
   },
