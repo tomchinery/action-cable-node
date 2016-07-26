@@ -9,6 +9,7 @@ var Subscription = Base.extend({
     }
     this.identifier = JSON.stringify(params);
     this.extendIt(this, mixin);
+    this.self = this
   },
 
   perform: function (action, data) {
@@ -44,4 +45,4 @@ var Subscription = Base.extend({
 
 });
 
-module.exports = { Subscription: Subscription }
+module.exports = Subscription

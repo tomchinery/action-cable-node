@@ -5,9 +5,10 @@ var Connection = require('./connection.js')
 
 var Consumer = Base.extend({
   constructor: function (url) {
+    this.self = this
     this.url = url
-    this.subscriptions = new Subscriptions(this);
-    this.connection = new Connection(this);
+    this.subscriptions = new Subscriptions(this).self;
+    this.connection = new Connection(this).self;
   },
 
   send: function (data) {
@@ -31,4 +32,4 @@ var Consumer = Base.extend({
   }
 });
 
-module.exports = { Consumer: Consumer }
+module.exports = Consumer

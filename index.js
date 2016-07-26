@@ -6,3 +6,7 @@ var INTERNAL = require('./internal.js')
 
 // Import ActionCable
 var ActionCable = require('./action_cable.js')
+
+var ActionCable= new ActionCable().self
+
+module.exports = ActionCable

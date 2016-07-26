@@ -4,7 +4,9 @@ var Consumer = require('./action_cable/consumer.js')
 
 var ActionCable = Base.extend({
 
-  constructor: {},
+  constructor: function () {
+    this.self = this
+  },
 
   INTERNAL: INTERNAL_JSON,
 
@@ -13,7 +15,7 @@ var ActionCable = Base.extend({
     if (url == null) {
       url = (ref = this.getConfig("url")) != null ? ref : this.INTERNAL.default_mount_path;
     }
-    return new Consumer(this.createWebSocketURL(url))
+    return new Consumer(this.createWebSocketURL(url)).self
   },
 
   getConfig: function (name) {
@@ -52,4 +54,4 @@ var ActionCable = Base.extend({
   }
 });
 
-module.exports = { ActionCable: ActionCable }
+module.exports = ActionCable

@@ -8,6 +8,7 @@ var Subscriptions = Base.extend({
   constructor: function (consumer) {
     this.consumer = consumer;
     this.subscriptions = [];
+    this.self = this
   },
 
   create: function (channelName, mixin) {
@@ -15,7 +16,7 @@ var Subscriptions = Base.extend({
     params = typeof channel === "object" ? channel : {
       channel: channel
     };
-    subscription = new Subscription(this.consumer, params, mixin);
+    subscription = new Subscription(this.consumer, params, mixin).self;
     return this.add(subscription);
   },
 
@@ -127,4 +128,4 @@ var Subscriptions = Base.extend({
   }
 });
 
-module.exports = { Subscriptions: Subscriptions }
+module.exports = Subscriptions

@@ -15,8 +15,9 @@ var Connection = Base.extend({
     this.consumer = consumer;
     this.open = bind(this.open, this);
     this.subscriptions = this.consumer.subscriptions;
-    this.monitor = new ConnectionMonitor(this);
+    this.monitor = new ConnectionMonitor(this).self;
     this.disconnected = true;
+    this.self = this
   },
 
   reopenDelay: 500,
@@ -178,4 +179,4 @@ var Connection = Base.extend({
 
 });
 
-module.exports = { Connection: Connection }
+module.exports = Connection

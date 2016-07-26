@@ -23,6 +23,7 @@ var ConnectionMonitor = Base.extend({
     this.connection = connection;
     this.visibilityDidChange = bind(this.visibilityDidChange, this);
     this.reconnectAttempts = 0;
+    this.self = this
   },
 
   pollInterval: {
@@ -132,4 +133,4 @@ var ConnectionMonitor = Base.extend({
   }
 });
 
-module.exports = { ConnectionMonitor: ConnectionMonitor }
+module.exports = ConnectionMonitor
