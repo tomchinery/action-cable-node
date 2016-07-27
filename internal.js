@@ -1,4 +1,4 @@
-var INTERNAL_JSON = {
+var INTERNAL = {
   message_types: {
     welcome: "welcome",
     ping: "ping",
@@ -9,4 +9,4 @@ var INTERNAL_JSON = {
   protocols: ["actioncable-v1-json", "actioncable-unsupported"]
 }
 
-module.exports = INTERNAL_JSON
+module.exports = INTERNAL

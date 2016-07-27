@@ -1,35 +1,27 @@
-var Base = require('basejs')
-var Subscriptions = require('./subscriptions.js')
-var Connection = require('./connection.js')
-var ActionCable = require('../index.js')
+var INTERNAL = require('../internal.js')
 
-var Consumer = Base.extend({
-  constructor: function (url) {
-    this.self = this
-    this.url = url
-    this.subscriptions = new Subscriptions(this).self;
-    this.connection = new Connection(this).self;
-  },
+var Consumer = function (url) {
+  this.url = url
+}
 
-  send: function (data) {
-    return this.connection.send(data);
-  },
+Consumer.prototype.send = function (data) {
+  return this.connection.send(data)
+}
 
-  connect: function () {
-    return this.connection.open();
-  },
+Consumer.prototype.connect = function () {
+  return this.connection.open()
+}
 
-  disconnect: function () {
-    return this.connection.close({
-      allowReconnect: false
-    });
-  },
+Consumer.prototype.disconnect = function () {
+  return this.connection.close({
+    allowReconnect: false
+  })
+}
 
-  ensureActiveConnection: function () {
-    if (!this.connection.isActive()) {
-      return this.connection.open();
-    }
+Consumer.prototype.ensureActiveConnection = function () {
+  if (!this.connection.isActive()) {
+    return this.connection.open()
   }
-});
+}
 
 module.exports = Consumer
