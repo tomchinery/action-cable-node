@@ -23,6 +23,5 @@
   },
   "homepage": "https://github.com/tomchinery/action-cable-node#readme",
   "dependencies": {
-    "basejs": "^1.1.1"
   }
 }
