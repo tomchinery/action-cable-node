@@ -1,7 +1,7 @@
 var INTERNAL = require('../internal.js')
 var Logger = require('./logger.js')
 
-// var ConnectionMonitor = require('./connection_monitor.js')
+var ConnectionMonitor = require('./connection_monitor.js')
 
 var message_types = INTERNAL.message_types
 var supportedProtocols = INTERNAL.protocols
