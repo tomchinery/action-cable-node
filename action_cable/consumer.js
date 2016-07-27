@@ -1,11 +1,11 @@
 var INTERNAL = require('../internal.js')
-// var Subscriptions = require('./subscriptions.js')
-// var Connection = require('./connection.js')
+var Subscriptions = require('./subscriptions.js')
+var Connection = require('./connection.js')
 
 var Consumer = function (url) {
   this.url = url
-  // new connection
-  // new Subscriptions
+  this.subscriptions = new Subscriptions(this)
+  this.connection = new Connection(this)
 }
 
 Consumer.prototype.send = function (data) {

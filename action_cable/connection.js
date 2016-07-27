@@ -94,7 +94,7 @@ Connection.prototype.isProtocolSupported = function () {
 
 Connection.prototype.isState = function (states) {
   var ref;
-  states = 1 <= states.length + slice.call(states, 0) : []
+  states = 1 <= states.length ? slice.call(states, 0) : []
   return ref = this.getState(), indexOf.call(states, ref) >= 0;
 }
 
