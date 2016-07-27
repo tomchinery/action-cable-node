@@ -109,4 +109,68 @@ Connection.prototype.getState = function () {
   return null
 }
 
-// installEventHandlers
+Connection.prototype.installEventHandlers = function () {
+  var eventName, handler;
+  for (eventName in this.events) {
+    handler = this.events[eventName].bind(this)
+    this.webSocket["on" + eventName] = handler
+  }
+}
+
+Connection.prototype.uninstallEventHandlers = function () {
+  var eventName;
+  for (eventName in this.events) {
+    this.webSocket["on" + eventName] = function() {};
+  }
+}
+
+Connection.prototype.events = function () {
+  return {
+    message: function(event) {
+      var identifier, message, ref, type;
+      if (!this.isProtocolSupported()) {
+        return;
+      }
+      ref = JSON.parse(event.data), identifier = ref.identifier, message = ref.message, type = ref.type;
+      switch (type) {
+        case message_types.welcome:
+          this.monitor.recordConnect();
+          return this.subscriptions.reload();
+        case message_types.ping:
+          return this.monitor.recordPing();
+        case message_types.confirmation:
+          return this.subscriptions.notify(identifier, "connected");
+        case message_types.rejection:
+          return this.subscriptions.reject(identifier);
+        default:
+          return this.subscriptions.notify(identifier, "received", message);
+      }
+    },
+    open: function() {
+      Logger.log(["WebSocket onopen event, using '" + (this.getProtocol()) + "' subprotocol"]);
+      this.disconnected = false;
+      if (!this.isProtocolSupported()) {
+        Logger.log(["Protocol is unsupported. Stopping monitor and disconnecting."]);
+        return this.close({
+          allowReconnect: false
+        });
+      }
+    },
+    close: function(event) {
+      Logger.log(["WebSocket onclose event"]);
+      if (this.disconnected) {
+        return;
+      }
+      this.disconnected = true;
+      this.monitor.recordDisconnect();
+      return this.subscriptions.notifyAll("disconnected", {
+        willAttemptReconnect: this.monitor.isRunning()
+      });
+    },
+    error: function() {
+      return log("WebSocket onerror event");
+    }
+  }
+}
+
+module.exports = Connection
