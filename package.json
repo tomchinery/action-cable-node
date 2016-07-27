@@ -1,6 +1,6 @@
 {
   "name": "action-cable-node",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "Action Cable extracted from Rails 5 and packaged as a Node module",
   "main": "index.js",
   "scripts": {
@@ -22,6 +22,5 @@
     "url": "https://github.com/tomchinery/action-cable-node/issues"
   },
   "homepage": "https://github.com/tomchinery/action-cable-node#readme",
-  "dependencies": {
-  }
+  "dependencies": {}
 }
