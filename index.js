@@ -13,7 +13,6 @@ ActionCable.prototype.createConsumer = function (url) {
   if (url == null) {
     url = defaultURL != null ? defaultURL : this.internal.default_mount_path
   }
-  return url
   return new Consumer(this.createWebSocketURL(url))
 }
 
