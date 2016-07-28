@@ -80,11 +80,11 @@ Connection.prototype.getProtocol = function () {
 }
 
 Connection.prototype.isOpen = function () {
-  return this.isState("open")
+  return this.isState(["open"])
 }
 
 Connection.prototype.isActive = function () {
-  return this.isState("open", "connecting")
+  return this.isState(["open", "connecting"])
 }
 
 Connection.prototype.isProtocolSupported = function () {
