@@ -83,21 +83,18 @@ Subscriptions.prototype.reload = function () {
   return results;
 }
 
-Subscriptions.prototype.notifyAll = function () {
-  var args, callbackName, i, len, ref, results, subscription;
-  callbackName = arguments[0], args = 2 <= arguments.length ? slice.call(arguments, 1) : [];
-  ref = this.subscriptions;
-  results = [];
-  for (i = 0, len = ref.length; i < len; i++) {
+Subscriptions.prototype.notifyAll = function (callbackName, args) {
+  var ref = this.subscriptions;
+  var results = [];
+  for (i = 0; i < ref.length; i++) {
     subscription = ref[i];
     results.push(this.notify.apply(this, [subscription, callbackName].concat(slice.call(args))));
   }
   return results;
 }
 
-Subscriptions.prototype.notify = function () {
-  var args, callbackName, i, len, results, subscription, subscriptions;
-  subscription = arguments[0], callbackName = arguments[1], args = 3 <= arguments.length ? slice.call(arguments, 2) : [];
+Subscriptions.prototype.notify = function (subscription, callbackName, args) {
+  var subscriptions, results;
   if (typeof subscription === "string") {
     subscriptions = this.findAll(subscription);
   } else {
