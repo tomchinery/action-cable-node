@@ -44,10 +44,10 @@ Subscriptions.prototype.reject = function (identifier) {
 }
 
 Subscriptions.prototype.forget = function (subscription) {
-  var s;
+  var s, results;
   this.subscriptions = (function () {
     var ref = this.subscriptions
-    resluts = []
+    results = []
     for (i = 0; i < ref.length; i++) {
       s = ref[i]
       if (s !== subscription) {
